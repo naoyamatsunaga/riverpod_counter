@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'main.g.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -30,6 +33,8 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String helloWorld = ref.watch(helloWorldProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -39,6 +44,10 @@ class MyHomePage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              helloWorld,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -52,4 +61,9 @@ class MyHomePage extends ConsumerWidget {
       ),
     );
   }
+}
+
+@riverpod
+String helloWorld(HelloWorldRef ref) {
+  return 'Hello world!!';
 }
