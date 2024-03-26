@@ -25,12 +25,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends ConsumerWidget {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    _counter++;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String helloWorld = ref.watch(helloWorldProvider);
@@ -48,15 +42,12 @@ class MyHomePage extends ConsumerWidget {
               helloWorld,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        //onPressed: _incrementCounter,
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
     );
