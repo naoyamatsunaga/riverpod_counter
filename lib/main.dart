@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_counter/counter.dart';
+import 'package:riverpod_counter/random_color.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -27,6 +28,7 @@ class MyHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //watch:変更のたび発火される
     final int counter = ref.watch(counterProvider);
+    final Color color = ref.watch(randomColorProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +41,10 @@ class MyHomePage extends ConsumerWidget {
           children: <Widget>[
             Text(
               '$counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: TextStyle(
+                color: color,
+                fontSize: 100,
+              ),
             ),
           ],
         ),
@@ -47,6 +52,15 @@ class MyHomePage extends ConsumerWidget {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          FloatingActionButton(
+            //onPressed: _incrementCounter,
+            onPressed: () {
+              // read:1回しか呼ばれない
+              // notifier:counter.dartの中身全体のイメージ
+              ref.read(randomColorProvider.notifier).randomColor();
+            },
+            child: const Icon(Icons.color_lens),
+          ),
           FloatingActionButton(
             //onPressed: _incrementCounter,
             onPressed: () {
