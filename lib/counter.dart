@@ -13,4 +13,21 @@ class Counter extends _$Counter {
     //_counter++;
     state++;
   }
+
+  void decrementCounter() {
+    //_counter++;
+    state--;
+  }
+
+  void resetCounter() {
+    //_counter++;
+    state = 0;
+  }
+
+  void multiplyCounter() {
+    //_counter++;
+    state = state * state;
+  }
 }
+
+// ビルドの前にターミナルで「flutter pub run build_runner build」を実行する。

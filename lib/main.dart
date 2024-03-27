@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'main.g.dart';
+import 'package:riverpod_counter/counter.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -27,7 +25,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String helloWorld = ref.watch(helloWorldProvider);
+    //watch:変更のたび発火される
+    final int counter = ref.watch(counterProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -39,22 +38,53 @@ class MyHomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              helloWorld,
+              '$counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        //onPressed: _incrementCounter,
-        onPressed: () {},
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            //onPressed: _incrementCounter,
+            onPressed: () {
+              // read:1回しか呼ばれない
+              // notifier:counter.dartの中身全体のイメージ
+              ref.read(counterProvider.notifier).resetCounter();
+            },
+            child: const Icon(Icons.exposure_zero),
+          ),
+          FloatingActionButton(
+            //onPressed: _incrementCounter,
+            onPressed: () {
+              // read:1回しか呼ばれない
+              // notifier:counter.dartの中身全体のイメージ
+              ref.read(counterProvider.notifier).decrementCounter();
+            },
+            child: const Icon(Icons.remove),
+          ),
+          FloatingActionButton(
+            //onPressed: _incrementCounter,
+            onPressed: () {
+              // read:1回しか呼ばれない
+              // notifier:counter.dartの中身全体のイメージ
+              ref.read(counterProvider.notifier).incrementCounter();
+            },
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            //onPressed: _incrementCounter,
+            onPressed: () {
+              // read:1回しか呼ばれない
+              // notifier:counter.dartの中身全体のイメージ
+              ref.read(counterProvider.notifier).multiplyCounter();
+            },
+            child: const Icon(Icons.close),
+          ),
+        ],
       ),
     );
   }
-}
-
-@riverpod
-String helloWorld(HelloWorldRef ref) {
-  return 'Hello world!!';
 }
